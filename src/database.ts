@@ -53,7 +53,7 @@ export const getTableData = async (db: string, table: string) => {
     };
 }
 
-export const runQuery = async (db:string, table: string, query: string) => {
+export const runQuery = async (db:string, query: string) => {
     const client = connectPostgres(db);
     await client.connect()
     try{

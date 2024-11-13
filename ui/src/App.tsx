@@ -100,7 +100,14 @@ const App: React.FC = () => {
                 loading={loading}
                 setLoading={setLoading}
               />}
-            {selectedView == 'query' && <DataQuerier />}
+            {selectedView == 'query' && 
+              <DataQuerier 
+                setSelectedDatabase={setSelectedDatabase}  
+                db={selectedDatabase} 
+                table={selectedTable}
+                loading={loading}
+                setLoading={setLoading} 
+              />}
           </Spin>
         </Content>
         <Footer style={{ textAlign: 'center' }}>Database Explorer ©2024</Footer>

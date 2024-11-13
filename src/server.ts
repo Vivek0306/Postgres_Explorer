@@ -50,14 +50,14 @@ app.get('/data', async (req: any, res: any) => {
 })
 
 // Get the data from the selected table based on custom query
-app.get('/data/custom', async (req: any, res: any) => {
-    const { db, table, query } = req.query as { db?: string; table?: string; query?: string };
+app.post('/data/custom', async (req: any, res: any) => {
+    const { db, query } = req.body;
 
-    if (!db || !table || !query) {
+    if (!db || !query) {
         return res.status(400).send("Please specify 'db', 'table' and 'query', query parameters.");
     }
     try{
-        const databases = await runQuery(db, table, query);
+        const databases = await runQuery(db, query);
         res.status(200).json(databases);
     }catch(error){
         res.status(500).send("Error fetching the data...");
