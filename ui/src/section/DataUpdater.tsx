@@ -4,19 +4,19 @@ import DatabaseSelector from '../components/DatabaseSelector';
 import TableSelector from '../components/TableSelector';
 import UpdateTable from '../components/UpdateTable';
 
-const DataUpdater: React.FC<any> = ({ setSelectedDatabase, setSelectedTable, loading, setLoading, selectedDatabase, selectedTable }) => {
+const DataUpdater: React.FC<any> = ({ setSelectedDatabase, setSelectedTable, loading, setLoading, selectedDatabase, selectedTable, isMobile }) => {
     return (
         <>
             <h1 style={{ textAlign: 'center' }}>Update your data here!</h1>
             <Divider />
             <Row>
                 <Col md={12} sm={24}>
-                    <DatabaseSelector selectedDatabase={selectedDatabase} setSelectedDatabase={setSelectedDatabase} setLoading={setLoading}></DatabaseSelector>
+                    <DatabaseSelector selectedDatabase={selectedDatabase} setSelectedDatabase={setSelectedDatabase} setLoading={setLoading} isMobile={isMobile}></DatabaseSelector>
                 </Col>
                 {selectedDatabase &&
                     (
                         <Col md={12} sm={24}>
-                            <TableSelector db={selectedDatabase} selectedTable={selectedTable} setSelectedTable={setSelectedTable}></TableSelector>
+                            <TableSelector db={selectedDatabase} selectedTable={selectedTable} setSelectedTable={setSelectedTable} isMobile={isMobile}></TableSelector>
                         </Col>
                     )
                 }

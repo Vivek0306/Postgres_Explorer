@@ -8,11 +8,13 @@ interface TableSelectorProps {
   db: string | null;
   selectedTable: string | null;
   setSelectedTable: (table: string | null) => void;
+  isMobile: boolean;
 }
 
-const TableSelector: React.FC<TableSelectorProps> = ({ db, selectedTable, setSelectedTable }) => {
+const TableSelector: React.FC<TableSelectorProps> = ({ db, selectedTable, setSelectedTable, isMobile }) => {
   const [tables, setTables] = useState<string[]>([]);
   const [loadingTables, setLoadingTables] = useState<boolean>(false);
+
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -37,14 +39,18 @@ const TableSelector: React.FC<TableSelectorProps> = ({ db, selectedTable, setSel
   }, [db])
 
   return (
-    <div style={{
-        display: 'flex', 
-        flexDirection: 'row', 
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '18px'
+    <div  style={{
+      display: 'flex',
+      flexDirection: 'row', 
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: isMobile ? '56px' : '18px'
+
     }}>
-      <h2>Select Table:</h2>
+      <p style={{
+                fontSize: isMobile ? '14px' : '18px',
+                fontWeight: isMobile ? '600' : '600'
+            }}>Select Table:</p>
       <Spin spinning={loadingTables}>
         <Select
           showSearch

@@ -54,13 +54,17 @@ app.post('/data/custom', async (req: any, res: any) => {
     const { db, query } = req.body;
 
     if (!db || !query) {
-        return res.status(400).send("Please specify 'db', 'table' and 'query', query parameters.");
+        return res.status(400).send("Please specify 'db' and 'query', query parameters.");
     }
     try{
-        const databases = await runQuery(db, query);
-        res.status(200).json(databases);
+        const data = await runQuery(db, query);
+        if (data.length > 0){
+            res.status(200).json(data);
+        }else{
+            res.status(200).json([{"message": "Query Executed Successfully"}])
+        }
     }catch(error){
-        res.status(500).send("Error fetching the data...");
+        res.status(500).send("Error fetching the data..." + error);
     }
 })
 

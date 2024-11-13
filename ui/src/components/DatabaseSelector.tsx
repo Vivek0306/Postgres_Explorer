@@ -7,9 +7,10 @@ interface DatabaseSelectorProps {
     selectedDatabase: string | null;
     setSelectedDatabase: (db: string) => void;
     setLoading: (loading: boolean) => void;
+    isMobile: boolean;
 }
 
-const DatabaseSelector: React.FC<DatabaseSelectorProps> = ({selectedDatabase, setSelectedDatabase, setLoading}) => {
+const DatabaseSelector: React.FC<DatabaseSelectorProps> = ({ selectedDatabase, setSelectedDatabase, setLoading, isMobile }) => {
     const [databases, setDatabases] = useState<string[]>([]);
     const [loadingDatabases, setLoadingDatabases] = useState<boolean>(false);
 
@@ -35,9 +36,12 @@ const DatabaseSelector: React.FC<DatabaseSelectorProps> = ({selectedDatabase, se
             flexDirection: 'row', 
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '18px'
+            gap: isMobile ? '32px' : '18px'
         }}>
-            <h2>Select Database: </h2>
+            <p style={{
+                fontSize: isMobile ? '14px' : '18px',
+                fontWeight: '600'
+            }}>Select Database: </p>
             <Spin spinning={loadingDatabases}>
                 <Select 
                     value={selectedDatabase}

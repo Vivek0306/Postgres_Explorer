@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout, Spin, Menu, Button, Row, Col } from 'antd';
+import { Layout, Spin, Menu, Button } from 'antd';
 import DataBrowser from "./section/DataBrowser";
 import DataUpdater from "./section/DataUpdater";
 import DataQuerier from "./section/DataQuerier";
@@ -13,13 +13,19 @@ import {
 
 const { Header, Footer, Sider, Content } = Layout;
 
-
 const App: React.FC = () => {
   const [selectedView, setSelectedView] = useState<'view' | 'query' | 'update'>((localStorage.getItem('menu') as 'view'| 'query' | 'update') || 'view');
   const [selectedDatabase, setSelectedDatabase] = useState<string | null>(localStorage.getItem('database'));
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedTable, setSelectedTable] = useState<string | null>(localStorage.getItem('table'));
   const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     setSelectedTable(null);
@@ -29,17 +35,22 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('table', selectedTable as string);
     localStorage.setItem('database', selectedDatabase as string);
-  }, [selectedTable])
+  }, [selectedTable]);
 
   const handleMenuClick = ({ key }: { key: string }) => {
     setSelectedView(key as 'view' | 'query' | 'update');
     localStorage.setItem('menu', selectedView);
   }
+
   return (
     <Layout>
       <Sider
         width={240}
-        collapsible collapsed={collapsed}
+        trigger={null}
+        collapsed={collapsed}
+        onCollapse={setCollapsed}
+        breakpoint="lg"
+        collapsedWidth="0"
       >
         <div style={{
           color: 'white',
@@ -82,7 +93,7 @@ const App: React.FC = () => {
         </Header>
         <Content style={{ padding: '10px' }}>
           <Spin spinning={loading}>
-            {selectedView == 'view' &&
+            {selectedView === 'view' &&
               <DataBrowser
                 setSelectedDatabase={setSelectedDatabase}
                 setSelectedTable={setSelectedTable}
@@ -90,8 +101,9 @@ const App: React.FC = () => {
                 selectedTable={selectedTable}
                 loading={loading}
                 setLoading={setLoading}
+                isMobile={isMobile}
               />}
-            {selectedView == 'update' &&
+            {selectedView === 'update' &&
               <DataUpdater
                 setSelectedDatabase={setSelectedDatabase}
                 setSelectedTable={setSelectedTable}
@@ -99,14 +111,16 @@ const App: React.FC = () => {
                 selectedTable={selectedTable}
                 loading={loading}
                 setLoading={setLoading}
+                isMobile={isMobile}
               />}
-            {selectedView == 'query' && 
+            {selectedView === 'query' &&
               <DataQuerier 
                 setSelectedDatabase={setSelectedDatabase}  
                 db={selectedDatabase} 
                 table={selectedTable}
                 loading={loading}
                 setLoading={setLoading} 
+                isMobile={isMobile}
               />}
           </Spin>
         </Content>

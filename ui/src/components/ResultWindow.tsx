@@ -6,12 +6,10 @@ interface ResultWindowProps {
 }
 
 const ResultWindow: React.FC<ResultWindowProps> = ({ queryResult }) => {
-    // Check if the query result is empty or not
     if (queryResult.length === 0) {
-        return <Typography.Text>No results to display</Typography.Text>;
+        return <h3 style={{padding: '24px', textAlign:'center', color:'gray'}}>Run a query to display results!</h3>;
     }
 
-    // Extract columns dynamically from the first row of the queryResult
     const columns = Object.keys(queryResult[0]).map(key => ({
         title: key.charAt(0).toUpperCase() + key.slice(1),
         dataIndex: key,

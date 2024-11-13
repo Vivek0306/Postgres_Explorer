@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Spin, Alert, Input } from 'antd';
+import { Table, Row, Spin, Alert, Input } from 'antd';
 import axios from 'axios';
 import BreadcrumbNav from './BreadcrumbNav';
 
@@ -8,10 +8,11 @@ interface DataTableProps {
     table: string;
     setSelectedDatabase: () => void;
     setSelectedTable: () => void;
+    isMobile: boolean;
 }
 
 
-const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedDatabase, setSelectedTable }) => {
+const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedDatabase, setSelectedTable, isMobile }) => {
     const [data, setData] = useState<any[]>([]);
     const [columns, setColumns] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -58,15 +59,14 @@ const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedD
 
 
     return (
-        <div>
-            {/* <h2>Table Data for {table}</h2> */}
-            <Spin spinning={loading}>
-                {error && <Alert message={error} type="error" showIcon style={{ marginBottom: '16px' }} />}
+        <Spin spinning={loading}>
+            {error && <Alert message={error} type="error" showIcon style={{ marginBottom: '16px' }} />}
+            <Row>
                 <div style={{
                     display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
+                    flexDirection: isMobile ? 'column' : 'row',
+                    alignItems: isMobile ? 'start' : 'center',
+                    justifyContent: isMobile ? 'start' : 'space-between'
                 }}>
                     <BreadcrumbNav selectedDatabase={db} selectedTable={table} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} />
                     <Input.Search
@@ -75,14 +75,16 @@ const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedD
                         style={{ width: '300px' }}
                     />
                 </div>
+            </Row>
+            <Row>
                 <Table
                     columns={columns}
                     dataSource={filteredData}
                     rowKey={(record) => record.id || Math.random().toString()}
                     pagination={{ pageSize: 10 }}
                 />
-            </Spin>
-        </div>
+            </Row>
+        </Spin>
     )
 }
 
