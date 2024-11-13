@@ -1,0 +1,89 @@
+import React, { useEffect, useState } from 'react';
+import { Table, Spin, Alert, Input } from 'antd';
+import axios from 'axios';
+import BreadcrumbNav from './BreadcrumbNav';
+
+interface DataTableProps {
+    db: string;
+    table: string;
+    setSelectedDatabase: () => void;
+    setSelectedTable: () => void;
+}
+
+
+const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedDatabase, setSelectedTable }) => {
+    const [data, setData] = useState<any[]>([]);
+    const [columns, setColumns] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [filteredData, setFilteredData] = useState<any[]>([]);
+    const [error, setError] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState('');
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const res = await axios.get(`http://localhost:5252/data?db=${db}&table=${table}`);
+                const tableData = res.data;
+                if (tableData.length > 0) {
+                    const cols = Object.keys(tableData[0]).map((key: any) => ({
+                        title: key,
+                        dataIndex: key,
+                        key: key,
+                        // sorter: (a: any, b: any) => (a[key] > b[key] ? 1 : -1),
+                    }));
+                    setColumns(cols);
+                }
+                setData(tableData);
+                setFilteredData(tableData);
+            } catch (error) {
+                console.error("Error fetching table data: ", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, [db, table]);
+
+
+    useEffect(() => {
+        const filtered = data.filter((row) =>
+            Object.values(row).some((value) =>
+                String(value).toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        );
+        setFilteredData(filtered);
+    }, [searchTerm]);
+
+
+    return (
+        <div>
+            {/* <h2>Table Data for {table}</h2> */}
+            <Spin spinning={loading}>
+                {error && <Alert message={error} type="error" showIcon style={{ marginBottom: '16px' }} />}
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
+                    <BreadcrumbNav selectedDatabase={db} selectedTable={table} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} />
+                    <Input.Search
+                        placeholder="Search table data"
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        style={{ width: '300px' }}
+                    />
+                </div>
+                <Table
+                    columns={columns}
+                    dataSource={filteredData}
+                    rowKey={(record) => record.id || Math.random().toString()}
+                    pagination={{ pageSize: 10 }}
+                />
+            </Spin>
+        </div>
+    )
+}
+
+export default DataTable;

@@ -1,0 +1,16 @@
+**/node_modules/
+
+.env
+
+*.log
+*.debug
+
+/dist
+/build
+
+.DS_Store
+Thumbs.db
+
+# Optionally, you can also ignore lock files based on your preferences
+# package-lock.json
+# yarn.lock
