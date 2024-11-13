@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node server.ts",
-    "dev": "nodemon --exec npx ts-node server.ts"
+    "dev": "nodemon --watch src --exec npx ts-node src/server.ts"
   },
   "keywords": [],
   "author": "",
