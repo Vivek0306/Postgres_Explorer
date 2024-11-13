@@ -25,7 +25,7 @@ const DataUpdater: React.FC<any> = ({ setSelectedDatabase, setSelectedTable, loa
                 <Divider variant='dotted' />
                 {selectedTable &&
                     (
-                        <UpdateTable db={selectedDatabase as string} table={selectedTable as string} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} />
+                        <UpdateTable db={selectedDatabase as string} table={selectedTable as string} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} isMobile={isMobile}/>
                     )}
             </div>
         </>

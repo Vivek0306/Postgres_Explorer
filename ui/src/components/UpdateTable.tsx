@@ -15,10 +15,11 @@ interface UpdateTableProps {
     table: string;
     setSelectedDatabase: () => void;
     setSelectedTable: () => void;
+    isMobile: boolean;
 }
 
 
-const UpdateTable: React.FC<UpdateTableProps> = ({ db = "", table = "", setSelectedDatabase, setSelectedTable }) => {
+const UpdateTable: React.FC<UpdateTableProps> = ({ db = "", table = "", setSelectedDatabase, setSelectedTable, isMobile }) => {
     const [data, setData] = useState<any[]>([]);
     const [columns, setColumns] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -197,9 +198,9 @@ const UpdateTable: React.FC<UpdateTableProps> = ({ db = "", table = "", setSelec
                 {error && <Alert message={error} type="error" showIcon style={{ marginBottom: '16px' }} />}
                 <div style={{
                     display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
+                    flexDirection: isMobile ? 'column' : 'row',
+                    alignItems: isMobile ? 'start' : 'center',
+                    justifyContent: isMobile ? 'start' : 'space-between'
                 }}>
                     <BreadcrumbNav selectedDatabase={db} selectedTable={table} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} />
                     <Input.Search
@@ -219,6 +220,7 @@ const UpdateTable: React.FC<UpdateTableProps> = ({ db = "", table = "", setSelec
                                 Add Data
                             </Button>
                         </div>)}
+                    scroll={{x: true}}
                 />
                 <UpdateModal loading={loading} visible={openModal} handleModalClose={handleModalClose} record={selectedRecord} onUpdate={onUpdate} mode={mode} schema={schema} />
             </Spin>

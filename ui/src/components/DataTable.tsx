@@ -61,7 +61,7 @@ const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedD
     return (
         <Spin spinning={loading}>
             {error && <Alert message={error} type="error" showIcon style={{ marginBottom: '16px' }} />}
-            <Row>
+            <div>
                 <div style={{
                     display: 'flex',
                     flexDirection: isMobile ? 'column' : 'row',
@@ -75,15 +75,14 @@ const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedD
                         style={{ width: '300px' }}
                     />
                 </div>
-            </Row>
-            <Row>
-                <Table
-                    columns={columns}
-                    dataSource={filteredData}
-                    rowKey={(record) => record.id || Math.random().toString()}
-                    pagination={{ pageSize: 10 }}
-                />
-            </Row>
+            </div>
+            <Table
+                columns={columns}
+                dataSource={filteredData}
+                rowKey={(record) => record.id || Math.random().toString()}
+                pagination={{ pageSize: 10 }}
+                scroll={{ x: true }}
+            />
         </Spin>
     )
 }

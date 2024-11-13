@@ -21,18 +21,16 @@ const DataBrowser: React.FC<any> = ({ setSelectedDatabase, setSelectedTable, loa
                     )
                 }
             </Row>
-            <div style={{display: 'flex'}}>
-                    {selectedTable && (
-                        <div style={{ padding: '24px', overflowX: 'auto' }}>
-                            <DataTable
-                                db={selectedDatabase as string}
-                                table={selectedTable as string}
-                                setSelectedDatabase={setSelectedDatabase}
-                                setSelectedTable={setSelectedTable}
-                                isMobile={isMobile}
-                            />
-                        </div>
-                    )}
+            <div>
+                {selectedTable && (
+                    <DataTable
+                        db={selectedDatabase as string}
+                        table={selectedTable as string}
+                        setSelectedDatabase={setSelectedDatabase}
+                        setSelectedTable={setSelectedTable}
+                        isMobile={isMobile}
+                    />
+                )}
             </div>
         </>
     )
