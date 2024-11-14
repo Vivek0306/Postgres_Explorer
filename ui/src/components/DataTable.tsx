@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Row, Spin, Alert, Input } from 'antd';
+import { Table, Spin, Alert, Input } from 'antd';
 import axios from 'axios';
 import BreadcrumbNav from './BreadcrumbNav';
 
@@ -61,20 +61,19 @@ const DataTable: React.FC<DataTableProps> = ({ db = "", table = "", setSelectedD
     return (
         <Spin spinning={loading}>
             {error && <Alert message={error} type="error" showIcon style={{ marginBottom: '16px' }} />}
-            <div>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: isMobile ? 'column' : 'row',
-                    alignItems: isMobile ? 'start' : 'center',
-                    justifyContent: isMobile ? 'start' : 'space-between'
-                }}>
-                    <BreadcrumbNav selectedDatabase={db} selectedTable={table} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} />
-                    <Input.Search
-                        placeholder="Search table data"
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        style={{ width: '300px' }}
-                    />
-                </div>
+            <div style={{
+                display: 'flex',
+                flexDirection: isMobile ? 'column' : 'row',
+                alignItems: isMobile ? 'start' : 'center',
+                justifyContent: isMobile ? 'start' : 'space-between',
+                marginBottom: isMobile ? '12px' : '8px'
+            }}>
+                <BreadcrumbNav selectedDatabase={db} selectedTable={table} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} />
+                <Input.Search
+                    placeholder="Search table data"
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{ width: '300px' }}
+                />
             </div>
             <Table
                 columns={columns}

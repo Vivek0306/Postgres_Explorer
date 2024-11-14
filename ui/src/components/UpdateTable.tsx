@@ -200,7 +200,8 @@ const UpdateTable: React.FC<UpdateTableProps> = ({ db = "", table = "", setSelec
                     display: 'flex',
                     flexDirection: isMobile ? 'column' : 'row',
                     alignItems: isMobile ? 'start' : 'center',
-                    justifyContent: isMobile ? 'start' : 'space-between'
+                    justifyContent: isMobile ? 'start' : 'space-between',
+                    marginBottom: isMobile ? '12px' : '8px'
                 }}>
                     <BreadcrumbNav selectedDatabase={db} selectedTable={table} setSelectedDatabase={setSelectedDatabase} setSelectedTable={setSelectedTable} />
                     <Input.Search
