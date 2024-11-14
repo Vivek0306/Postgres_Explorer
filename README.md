@@ -6,7 +6,7 @@ Tired of relying on the traditional PSQL CLI for CRUD operations? **Database Exp
 ## Table of Contents
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
-- [Running the Backend](#running-the-backend)
+- [Running the App](#running-the-app)
 - [Running the Frontend](#running-the-frontend)
 - [Contributing](#contributing)
 - [License](#license)
@@ -19,16 +19,9 @@ Tired of relying on the traditional PSQL CLI for CRUD operations? **Database Exp
     cd Postgres_Explorer
     ```
 
-2. **Install backend dependencies**:
+2. **Install project dependencies**:
     ```bash
     npm install
-    ```
-
-3. **Navigate to the frontend directory and install dependencies**:
-    ```bash
-    cd ui
-    npm install
-    cd ..
     ```
 
 ## Environment Variables
@@ -42,23 +35,11 @@ DB_USER=<username>
 DB_PASSWORD=<password>
 ```
 
-## Running the Backend
+## Running the App
 
 1. **In the root directory run the following command**:
     ```bash
     npm run dev
-    ```
-
-
-## Running the Frontend
-
-1. **Navigate to the  `ui` directory**:
-    ```bash
-    cd ui
-    ```
-2. **Start the React App**:
-    ```bash
-    npm start
     ```
 <br>
 
