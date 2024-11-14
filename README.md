@@ -7,9 +7,7 @@ Tired of relying on the traditional PSQL CLI for CRUD operations? **Database Exp
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
 - [Running the App](#running-the-app)
-- [Running the Frontend](#running-the-frontend)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 
@@ -37,10 +35,10 @@ DB_PASSWORD=<password>
 
 ## Running the App
 
-1. **In the root directory run the following command**:
-    ```bash
-    npm run dev
-    ```
+**In the root directory run the following command**:
+```bash
+npm run dev
+```
 <br>
 
 ## Contributing
